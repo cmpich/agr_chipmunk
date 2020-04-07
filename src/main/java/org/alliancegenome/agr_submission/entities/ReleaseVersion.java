@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 
 import org.alliancegenome.agr_submission.BaseEntity;
 import org.alliancegenome.agr_submission.views.View;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -25,6 +26,7 @@ import lombok.ToString;
 
 @Entity
 @Getter @Setter @ToString(of= {"id", "releaseVersion", "releaseDate", "defaultSchemaVersion"})
+@Schema(name="ReleaseVersion", description="ReleaseVersion model")
 public class ReleaseVersion extends BaseEntity {
 
 	@Id @GeneratedValue
@@ -37,14 +39,17 @@ public class ReleaseVersion extends BaseEntity {
 	private Date releaseDate;
 	
 	@OneToMany(mappedBy="releaseVersion")
+	@Schema(implementation = SnapShot.class)
 	private List<SnapShot> snapShots;
 	
 	@OneToOne(fetch=FetchType.EAGER)
 	@JsonView({View.ReleaseVersionView.class})
+	@Schema(implementation = SchemaVersion.class)
 	private SchemaVersion defaultSchemaVersion;
 
 	@ManyToMany(mappedBy = "releaseVersions", fetch=FetchType.EAGER)
 	//@JsonView({View.ReleaseVersionView.class})
+	@Schema(implementation = DataFile.class)
 	private Set<DataFile> dataFiles = new HashSet<>();
 	
 }
