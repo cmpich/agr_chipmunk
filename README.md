@@ -251,7 +251,7 @@ The loader will run against the snapshot and releases API's, using the API Acces
 
 The following command can be used to pull a list of releases from the system that are available:
 	
-	> curl "https://fms.alliancegenome.org/api/data/releases"
+	> curl "https://fms.alliancegenome.org/api/releaseversion/all"
 
 <details>
 <summary>View Success Response</summary>
